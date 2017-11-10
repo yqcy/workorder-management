@@ -10,6 +10,23 @@ public class Workorder extends BaseEntity {
     private Category category;//工单的类型
     private List<Keyword> keywords;//关键词
 
+    public Workorder() {
+    }
+
+    public Workorder(String number) {
+        this.number = number;
+    }
+
+    public Workorder(Long id, String number) {
+        super.id = id;
+        this.number = number;
+    }
+
+    public Workorder(String number, Long categoryId) {
+        this.number = number;
+        this.category = new Category(categoryId);
+    }
+
     public String getNumber() {
         return number;
     }

@@ -43,8 +43,8 @@ public class CategoryController {
 
     @ApiOperation(value = "查询所有工单的处理类型", notes = "支持GET方式", response = String.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "页号", required = false, dataType = "String", paramType = "query", defaultValue = "1"),
-            @ApiImplicitParam(name = "size", value = "每页显示的条数", required = false, dataType = "String", paramType = "query", defaultValue = "10")
+            @ApiImplicitParam(name = "page", value = "页号", required = false, dataType = "Int", paramType = "query", defaultValue = "1"),
+            @ApiImplicitParam(name = "size", value = "每页显示的条数", required = false, dataType = "Int", paramType = "query", defaultValue = "10")
     })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "请求已完成"),
@@ -74,7 +74,7 @@ public class CategoryController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源，或文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/query", method = RequestMethod.GET)
+    @RequestMapping(value = "/get", method = RequestMethod.GET)
     public Object queryCategory(@RequestParam(value = "id", required = false) Long id,
                                 @RequestParam(value = "name", required = false) String name) {
         Category category = new Category(id, name);
@@ -84,7 +84,7 @@ public class CategoryController {
 
     @ApiOperation(value = "删除某个工单的处理类型", notes = "支持DELETE方式", response = String.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "类型的主键", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "id", value = "类型的主键", required = true, dataType = "Long", paramType = "query")
     })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "请求已完成"),
@@ -96,7 +96,7 @@ public class CategoryController {
     )
     @RequestMapping(value = "/del", method = RequestMethod.DELETE)
     public Object deleteCategory(@RequestParam(value = "id") Long id) {
-        Boolean result = this.categoryService.delete(id);
-        return result;
+        this.categoryService.remove(id);
+        return "success";
     }
 }

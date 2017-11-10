@@ -1,6 +1,5 @@
 package com.yq.dao;
 
-import com.yq.entity.Keyword;
 import com.yq.entity.Workorder;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -11,13 +10,13 @@ import java.util.List;
  * created by wb-yq264139 on 2017/11/10
  */
 @Mapper
-public interface WorkerOrderMapper {
+public interface WorkorderMapper {
 
     void insert(Workorder workorder);
 
-    Workorder select(Workorder keyword);
+    Workorder select(@Param("workorder") Workorder workorder);
 
-    List<Keyword> selectAll(@Param("index") Integer index, @Param("size") Integer size);
+    List<Workorder> selectAll(@Param("index") Integer index, @Param("size") Integer size);
 
     int count();
 

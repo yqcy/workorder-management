@@ -6,14 +6,6 @@ package com.yq.entity;
 public class Category extends BaseEntity {
     private String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Category() {
     }
 
@@ -25,4 +17,17 @@ public class Category extends BaseEntity {
         super.id = id;
         this.name = name;
     }
+
+    public Category(Long categoryId) {
+        super.id = categoryId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }

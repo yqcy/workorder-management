@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yq.dao.WorkorderMapper">
+    <resultMap id="CategoryMap" type="Category">
+        <id column="category_id" property="id"/>
+        <result column="category_create_time" property="createTime"/>
+        <result column="category_update_time" property="updateTime"/>
+        <result column="category_name" property="name"/>
+    </resultMap>
+
+    <resultMap id="KeywordMap" type="Keyword">
+        <id column="keyword_id" property="id"/>
+        <result column="keyword_create_time" property="createTime"/>
+        <result column="keyword_update_time" property="updateTime"/>
+        <result column="keyword_name" property="name"/>
+    </resultMap>
+
+    <resultMap id="WorkorderMap" type="Workorder">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="number" property="number"/>
+        <association property="category" resultMap="CategoryMap"/>
+        <collection property="keywords" resultMap="KeywordMap"/>
+    </resultMap>
+
+    <sql id="selectAll">
+        SELECT
+            t1.*,
+            t2.id          AS category_id,
+            t2.name        AS category_name,
+            t2.create_time AS category_create_time,
+            t2.update_time AS category_update_time,
+            t4.id          AS keyword_id,
+            t4.name        AS keyword_name,
+            t4.create_time AS keyword_create_time,
+            t4.update_time AS keyword_update_time
+        FROM t_workorder t1
+            LEFT JOIN t_category t2
+                ON t1.category_id = t2.id
+            LEFT JOIN r_workorder_keyword t3
+                ON t1.id = t3.workorder_id
+            LEFT JOIN t_keyword t4
+                ON t3.keyword_id = t4.id
+    </sql>
+
+    <insert id="insert" parameterType="Workorder">
+        INSERT INTO t_workorder(create_time, update_time, number, category_id)
+        VALUES(#{createTime}, #{updateTime}, #{number}, #{category.id})
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <select id="select" resultMap="WorkorderMap">
+        <include refid="selectAll"/>
+        <where>
+            <if test="workorder != null">
+                <if test="workorder.id != null">id = #{workorder.id}</if>
+                <if test="workorder.number != null">AND number = #{workorder.number}</if>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAll" resultMap="WorkorderMap">
+        <include refid="selectAll"/>
+        <if test="index != null and size != null">
+            LIMIT #{index} , #{size}
+        </if>
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*)
+        FROM t_workorder
+    </select>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM t_workorder
+        WHERE id = #{id}
+    </delete>
+</mapper>

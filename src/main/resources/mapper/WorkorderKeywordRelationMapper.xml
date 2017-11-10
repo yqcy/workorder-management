@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yq.dao.WorkorderKeywordRelationMapper">
+    <insert id="insert">
+        INSERT INTO r_workorder_keyword (create_time, update_time, workorder_id, keyword_id)
+        VALUES
+        <foreach collection="keywords" open="(" close=")" separator="," item="id">
+            #{createTime}, #{updateTime}, #{workorderId}, #{id}
+        </foreach>
+    </insert>
+</mapper>

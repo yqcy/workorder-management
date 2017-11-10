@@ -4,6 +4,7 @@ import com.yq.dao.CategoryMapper;
 import com.yq.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,7 @@ import static com.yq.util.PageUtils.compute;
  * created by YQ on 2017-11-08
  */
 @Service
+@Transactional
 public class CategoryService {
 
     @Autowired
@@ -38,8 +40,7 @@ public class CategoryService {
         return result;
     }
 
-    public Boolean delete(Long id) {
+    public void remove(Long id) {
         this.categoryMapper.delete(id);
-        return true;
     }
 }

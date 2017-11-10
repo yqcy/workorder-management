@@ -13,7 +13,7 @@ import java.util.List;
 public interface CategoryMapper {
     void insert(Category category);
 
-    Category select(Category category);
+    Category select(@Param("category") Category category);
 
     List<Category> selectAll(@Param("index") Integer index, @Param("size") Integer size);
 

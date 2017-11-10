@@ -14,7 +14,7 @@ public interface KeywordMapper {
 
     void insert(Keyword keyword);
 
-    Keyword select(Keyword keyword);
+    Keyword select(@Param("keyword") Keyword keyword);
 
     List<Keyword> selectAll(@Param("index") Integer index, @Param("size") Integer size);
 

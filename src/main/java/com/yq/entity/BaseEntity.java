@@ -9,9 +9,9 @@ import java.util.Date;
  */
 public class BaseEntity {
     protected Long id;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     protected Date createTime;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     protected Date updateTime;
 
     public Long getId() {
