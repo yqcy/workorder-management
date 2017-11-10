@@ -1,3 +1,7 @@
+DROP DATABASE ca;
+CREATE DATABASE ca
+  DEFAULT CHARSET = 'utf8';
+USE ca;
 CREATE TABLE t_category (
   id          BIGINT PRIMARY KEY AUTO_INCREMENT,
   create_time DATETIME    NOT NULL,
