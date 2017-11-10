@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yq.dao.CategoryMapper">
+
+    <resultMap id="CategoryMap" type="Category">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <sql id="selectAll">
+        SELECT *
+        FROM t_category
+    </sql>
+
+    <insert id="insert" parameterType="Category">
+        INSERT INTO t_category(create_time , update_time , name) VALUES(#{createTime} , #{updateTime} , #{name})
+        <selectKey keyColumn="id" keyProperty="id" order="AFTER" resultType="long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <select id="select" parameterType="Category" resultMap="CategoryMap">
+        <include refid="selectAll"/>
+        <where>
+            <if test="category != null">
+                <if test="category.id != null">id = #{category.id}</if>
+                <if test="category.name != null">AND name = #{category.name}</if>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAll" resultMap="CategoryMap">
+        <include refid="selectAll"/>
+        <where>
+            <if test="index != null and size != null">
+                LIMIT #{index} , #{size}
+            </if>
+        </where>
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*)
+        FROM t_category
+    </select>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM t_category
+        WHERE id = #{id}
+    </delete>
+</mapper>
