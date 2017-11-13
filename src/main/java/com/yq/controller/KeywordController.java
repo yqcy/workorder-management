@@ -20,7 +20,7 @@ public class KeywordController {
     @Autowired
     private KeywordService keywordService;
 
-    @ApiOperation(value = "添加关键词", notes = "支持PUT方式", response = String.class)
+    @ApiOperation(value = "添加关键词", notes = "支持POST方式", response = String.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "关键词名称", required = true, dataType = "String", paramType = "query")
     })
@@ -32,7 +32,7 @@ public class KeywordController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源，或文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/add", method = RequestMethod.PUT)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object addKeyword(@RequestParam(value = "name") String name) {
         Keyword keyword = new Keyword(name);
         return this.keywordService.save(keyword);
@@ -77,7 +77,7 @@ public class KeywordController {
         return this.keywordService.query(pageNum, pageSize);
     }
 
-    @ApiOperation(value = "删除某个关键词", notes = "支持DELETE方式", response = String.class)
+    @ApiOperation(value = "删除某个关键词", notes = "支持POST方式", response = String.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "主键", required = true, dataType = "Long", paramType = "query")
     })
@@ -89,7 +89,7 @@ public class KeywordController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源，或文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/del", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
     public Object removeKeyword(@RequestParam(value = "id") Long id) {
         this.keywordService.remove(id);
         return "success";

@@ -22,7 +22,7 @@ public class WorkorderController {
     @Autowired
     private WorkorderService workorderService;
 
-    @ApiOperation(value = "添加新的处理工单", notes = "支持PUT方式", response = String.class)
+    @ApiOperation(value = "添加新的处理工单", notes = "支持POST方式", response = String.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "number", value = "工单号", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "category", value = "类别的主键", required = false, dataType = "Long", paramType = "query", defaultValue = "1"),
@@ -36,7 +36,7 @@ public class WorkorderController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源，或文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/add", method = RequestMethod.PUT)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object addWorkorder(@RequestParam(value = "number") String number,
                                @RequestParam(value = "category", required = false) Long categoryId,
                                @RequestParam(value = "keywords", required = false) List<Long> keywords) {
@@ -83,7 +83,7 @@ public class WorkorderController {
         return this.workorderService.query(pageNum, pageSize);
     }
 
-    @ApiOperation(value = "删除某个工单", notes = "支持DELETE方式", response = String.class)
+    @ApiOperation(value = "删除某个工单", notes = "支持POST方式", response = String.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "主键", required = true, dataType = "Long", paramType = "query")
     })
@@ -95,7 +95,7 @@ public class WorkorderController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源，或文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/del", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
     public Object removeWorkorder(@RequestParam(value = "id") Long id) {
         this.workorderService.remove(id);
         return "success";

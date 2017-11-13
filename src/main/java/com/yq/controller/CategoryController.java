@@ -22,7 +22,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @ApiOperation(value = "添加新的工单的处理类型", notes = "支持PUT方式", response = String.class)
+    @ApiOperation(value = "添加新的工单的处理类型", notes = "支持POST方式", response = String.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "类型名称", required = true, dataType = "String", paramType = "query")
     })
@@ -34,7 +34,7 @@ public class CategoryController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源，或文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/add", method = RequestMethod.PUT)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Object add(@RequestParam(value = "name") String name) {
         Category category = new Category(name);
         Category result = this.categoryService.save(category);
@@ -82,7 +82,7 @@ public class CategoryController {
         return result;
     }
 
-    @ApiOperation(value = "删除某个工单的处理类型", notes = "支持DELETE方式", response = String.class)
+    @ApiOperation(value = "删除某个工单的处理类型", notes = "支持POST方式", response = String.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "类型的主键", required = true, dataType = "Long", paramType = "query")
     })
@@ -94,7 +94,7 @@ public class CategoryController {
             @ApiResponse(code = 404, message = "服务器找不到给定的资源，或文档不存在"),
             @ApiResponse(code = 500, message = "服务器不能完成请求")}
     )
-    @RequestMapping(value = "/del", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/del", method = RequestMethod.POST)
     public Object deleteCategory(@RequestParam(value = "id") Long id) {
         this.categoryService.remove(id);
         return "success";
