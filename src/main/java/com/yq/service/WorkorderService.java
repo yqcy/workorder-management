@@ -18,13 +18,19 @@ import java.util.List;
 public class WorkorderService {
 
     @Autowired
+    private DateUtils dateUtils;
+
+    @Autowired
+    private PageUtils pageUtils;
+
+    @Autowired
     private WorkorderMapper workorderMapper;
 
     @Autowired
     private WorkorderKeywordRelationMapper workorderKeywordRelationMapper;
 
     public Workorder save(Workorder workorder, List<Long> keywords) {
-        Date date = DateUtils.currentTime();
+        Date date = this.dateUtils.currentTime();
         workorder.setCreateTime(date);
         workorder.setUpdateTime(date);
         this.workorderMapper.insert(workorder);
@@ -36,8 +42,16 @@ public class WorkorderService {
         return this.workorderMapper.select(workorder);
     }
 
+    public List<Workorder> query(Date beginTime, Date endTime, Integer pageNum, Integer pageSize) {
+        return this.workorderMapper.selectAll(beginTime, endTime, this.pageUtils.compute(pageNum, pageSize), pageSize);
+    }
+
     public List<Workorder> query(Integer pageNum, Integer pageSize) {
-        return this.workorderMapper.selectAll(PageUtils.compute(pageNum, pageSize), pageSize);
+        return this.query(null, null, pageNum, pageSize);
+    }
+
+    public List<Workorder> query(Date begin, Date end) {
+        return this.query(begin, end, null, null);
     }
 
     public void remove(Long id) {

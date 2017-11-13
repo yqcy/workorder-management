@@ -30,7 +30,7 @@ public class ThymeleafViewHandler {
 
     @RequestMapping(value = "/index.html")
     public String index(Model model) {
-        List<Workorder> list = this.workorderService.query(null, null);
+        List<Workorder> list = this.workorderService.query((Integer) null, (Integer) null);
         model.addAttribute("workorders", list);
         return "index";
     }
@@ -42,5 +42,10 @@ public class ThymeleafViewHandler {
         model.addAttribute("categories", categories);
         model.addAttribute("keywords", keywords);
         return "workorder_add";
+    }
+
+    @RequestMapping(value = "/highcharts.html")
+    public String highcharts() {
+        return "highcharts";
     }
 }

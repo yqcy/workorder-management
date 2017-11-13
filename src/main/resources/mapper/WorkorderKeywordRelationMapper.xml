@@ -4,8 +4,8 @@
     <insert id="insert">
         INSERT INTO r_workorder_keyword (create_time, update_time, workorder_id, keyword_id)
         VALUES
-        <foreach collection="keywords" open="(" close=")" separator="," item="id">
-            #{createTime}, #{updateTime}, #{workorderId}, #{id}
+        <foreach collection="keywords" separator="," item="id">
+            (#{createTime}, #{updateTime}, #{workorderId}, #{id})
         </foreach>
     </insert>
 </mapper>

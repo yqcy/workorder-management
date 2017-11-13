@@ -17,10 +17,16 @@ import java.util.List;
 public class KeywordService {
 
     @Autowired
+    private DateUtils dateUtils;
+
+    @Autowired
+    private PageUtils pageUtils;
+
+    @Autowired
     private KeywordMapper keywordMapper;
 
     public Keyword save(Keyword keyword) {
-        Date date = DateUtils.currentTime();
+        Date date = this.dateUtils.currentTime();
         keyword.setCreateTime(date);
         keyword.setUpdateTime(date);
         this.keywordMapper.insert(keyword);
@@ -33,7 +39,7 @@ public class KeywordService {
     }
 
     public List<Keyword> query(Integer pageNum, Integer pageSize) {
-        return this.keywordMapper.selectAll(PageUtils.compute(pageNum, pageSize), pageSize);
+        return this.keywordMapper.selectAll(this.pageUtils.compute(pageNum, pageSize), pageSize);
     }
 
     public void remove(Long id) {

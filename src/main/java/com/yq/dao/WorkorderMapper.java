@@ -4,6 +4,7 @@ import com.yq.entity.Workorder;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public interface WorkorderMapper {
 
     Workorder select(@Param("workorder") Workorder workorder);
 
-    List<Workorder> selectAll(@Param("index") Integer index, @Param("size") Integer size);
+    List<Workorder> selectAll(@Param("beginTime") Date beginTime, @Param("endTime") Date endTime, @Param("index") Integer index, @Param("size") Integer size);
 
     int count();
 
