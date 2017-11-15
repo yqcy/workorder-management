@@ -13,4 +13,6 @@ import java.util.List;
 public interface WorkorderKeywordRelationMapper {
 
     void insert(@Param("createTime") Date createTime, @Param("updateTime") Date updateTime, @Param("workorderId") Long workorderId, @Param("keywords") List<Long> keywords);
+
+    void update(@Param("createTime") Date createTime, @Param("updateTime") Date updateTime, @Param("workorderId") Long workorderId, @Param("keywords") List<Long> keywords);
 }

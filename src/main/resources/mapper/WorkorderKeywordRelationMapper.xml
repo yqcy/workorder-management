@@ -8,4 +8,14 @@
             (#{createTime}, #{updateTime}, #{workorderId}, #{id})
         </foreach>
     </insert>
+
+    <update id="update">
+        INSERT INTO r_workorder_keyword (create_time, update_time , workorder_id , keyword_id)
+        VALUES
+        <foreach collection="keywords" separator="," item="id">
+            (#{createTime}, #{updateTime}, #{workorderId}, #{id})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        update_time = #{updateTime}
+    </update>
 </mapper>

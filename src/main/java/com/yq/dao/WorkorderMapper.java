@@ -22,4 +22,6 @@ public interface WorkorderMapper {
     int count();
 
     void delete(Long id);
+
+    void update(Workorder workorder);
 }

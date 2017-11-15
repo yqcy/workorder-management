@@ -12,7 +12,7 @@ import java.io.FileOutputStream;
  */
 public class TestPOI {
 
-    private String filePath = "D:\\Github\\workorder-management\\workbook.xls";
+    private String filePath = "C:\\Users\\wb-yq264139\\Desktop\\TestPOI.xls";
 
     @Test
     public void testWrite() throws Exception {
@@ -71,6 +71,27 @@ public class TestPOI {
     @Test
     public void testExcelService() {
         ExcelService service = new ExcelService();
-        Workbook workbook = service.createWorkbook();
+        Workbook wb = service.createWorkbook();
+        Sheet sheet = service.createSheet(wb, "咨询");
+        Row row = service.createRow(sheet, 0);
+        Cell cell1 = service.createCell(row, 0);
+        Cell cell2 = service.createCell(row, 1);
+        CellStyle titleCellStyle = service.getTitleCellStyle(wb);
+        service.setTitleColumnWidth(sheet);
+        service.setTitleFont(wb, titleCellStyle);
+        cell1.setCellValue("工单号");
+        cell1.setCellStyle(titleCellStyle);
+        cell2.setCellValue("类型");
+        cell2.setCellStyle(titleCellStyle);
+        Row row1 = service.createRow(sheet, 1);
+        Cell cell3 = service.createCell(row1, 0);
+        Cell cell4 = service.createCell(row1, 1);
+        CellStyle contentCellStyle = service.getContentCellStyle(wb);
+        service.setContentFont(wb, contentCellStyle);
+        cell3.setCellValue("number1");
+        cell3.setCellStyle(contentCellStyle);
+        cell4.setCellValue("退款");
+        cell4.setCellStyle(contentCellStyle);
+        service.write(wb, filePath);
     }
 }

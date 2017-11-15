@@ -82,4 +82,19 @@
         DELETE FROM t_workorder
         WHERE id = #{id}
     </delete>
+
+    <update id="update" parameterType="Workorder">
+        UPDATE t_workorder
+        <set>
+            <choose>
+                <when test="updateTime != null">update_time = #{updateTime}</when>
+                <otherwise>update_time = now()</otherwise>
+            </choose>
+            <if test="category.id != null">,category_id = #{category.id}</if>
+        </set>
+        <where>
+            <if test="id != null">id = #{id}</if>
+            <if test="number != null">OR `number` = #{number}</if>
+        </where>
+    </update>
 </mapper>

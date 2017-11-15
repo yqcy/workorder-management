@@ -31,14 +31,14 @@ public class DateUtils {
         return new Date();
     }
 
-    public Date parse(String str, String format) {
-        DateFormat dateFormat = this.dateFormatMap.get(format);
+    public Date parse(String str, String pattern) {
+        DateFormat dateFormat = this.dateFormatMap.get(pattern);
         Date result = null;
         if (dateFormat == null) {
-            dateFormat = new SimpleDateFormat(format);
+            dateFormat = new SimpleDateFormat(pattern);
             try {
                 result = dateFormat.parse(str);
-                this.dateFormatMap.put(format, dateFormat);
+                this.dateFormatMap.put(pattern, dateFormat);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -50,5 +50,14 @@ public class DateUtils {
             }
         }
         return result;
+    }
+
+    public String format(Date date, String pattern) {
+        DateFormat dateFormat = this.dateFormatMap.get(pattern);
+        if (dateFormat == null) {
+            dateFormat = new SimpleDateFormat(pattern);
+            this.dateFormatMap.put(pattern, dateFormat);
+        }
+        return dateFormat.format(date);
     }
 }

@@ -7,6 +7,7 @@ import com.yq.util.DateUtils;
 import com.yq.util.PageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -29,12 +30,21 @@ public class WorkorderService {
     @Autowired
     private WorkorderKeywordRelationMapper workorderKeywordRelationMapper;
 
+    @Transactional
     public Workorder save(Workorder workorder, List<Long> keywords) {
         Date date = this.dateUtils.currentTime();
         workorder.setCreateTime(date);
         workorder.setUpdateTime(date);
-        this.workorderMapper.insert(workorder);
-        this.workorderKeywordRelationMapper.insert(date, date, workorder.getId(), keywords);
+        try {
+            this.workorderMapper.insert(workorder);
+            this.workorderKeywordRelationMapper.insert(date, date, workorder.getId(), keywords);
+        } catch (Exception e) {
+            workorder = this.workorderMapper.select(workorder);
+            if (workorder == null) throw new RuntimeException(e);
+            workorder.setUpdateTime(date);
+            this.workorderMapper.update(workorder);
+            this.workorderKeywordRelationMapper.update(workorder.getCreateTime(), workorder.getUpdateTime(), workorder.getId(), keywords);
+        }
         return workorder;
     }
 
@@ -57,5 +67,4 @@ public class WorkorderService {
     public void remove(Long id) {
         this.workorderMapper.delete(id);
     }
-
 }
